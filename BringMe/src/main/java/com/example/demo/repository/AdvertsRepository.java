@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface  AdvertsRepository  extends JpaRepository<Adverts ,Long>    {
+    List<Adverts> findAll(Specification<Adverts> specification);
 
 
 }

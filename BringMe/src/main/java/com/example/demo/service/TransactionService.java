@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.Filter.TransactionsFilter;
+import com.example.demo.Specifications.TransactionsSpecification;
 import com.example.demo.controller.TransactionController;
 import com.example.demo.entity.Transaction;
 import com.example.demo.repository.TransactionRepository;
@@ -34,5 +36,8 @@ public class TransactionService {
     public ResponseEntity<Transaction> save(Transaction transaction){
         Transaction transaction1=transactionRepository.save(transaction);
         return new ResponseEntity<>(transaction1,HttpStatus.CREATED);
+    }
+    public List<Transaction> getByFilter(TransactionsFilter filter){
+        return transactionRepository.findAll(TransactionsSpecification.filter(filter));
     }
 }

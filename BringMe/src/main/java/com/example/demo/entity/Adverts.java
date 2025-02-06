@@ -16,14 +16,9 @@ public class Adverts {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
-    @ManyToMany
-    @JoinTable(
-            name = "advert_request",
-            joinColumns = @JoinColumn(name = "advert_id"),
-            inverseJoinColumns = @JoinColumn(name = "request_id")
-    )
-    private List<Request> requests = new ArrayList<>();
-
+    @ManyToOne
+    @JoinColumn(name = "users_id")
+    private Users users_id;
     private String fromCountry;
     private String toCountry;
     private LocalDateTime departureDate;

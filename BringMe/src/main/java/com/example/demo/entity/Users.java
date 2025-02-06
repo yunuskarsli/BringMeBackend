@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,19 +18,16 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_request", // Ara tablonun adı
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "request_id")
-    )
-    private List<Request> requests = new ArrayList<>();
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(nullable = false)
+    private String password;
+
     private String surname;
     private String email;
-    private Integer password;
-    private String role;
-    private Date created_at;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    private LocalDateTime created_at;
 
 }

@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.Filter.UserFilter;
+import com.example.demo.Specifications.UserSpecificaiton;
 import com.example.demo.entity.Adverts;
 import com.example.demo.entity.Users;
 import com.example.demo.repository.UserRepository;
@@ -18,6 +20,7 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    private Users us;
 
 
     public ResponseEntity<List<Users>> getAll() {
@@ -45,6 +48,10 @@ public class UserService {
     public ResponseEntity<Users> save(Users users){
         Users  users1=userRepository.save(users);
         return new ResponseEntity<>(users,HttpStatus.CREATED);
+    }
+    public List<Users> getByFilter(UserFilter filter){
+
+        return userRepository.findAll(UserSpecificaiton.filter(filter));
     }
 
 

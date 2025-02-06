@@ -14,15 +14,14 @@ import java.util.List;
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+
     private Integer id;
-    @ManyToMany(mappedBy = "requests")
-    private List<Users> users = new ArrayList<>();
-    @ManyToMany(mappedBy = "requests")
-    private List<Adverts> adverts=new ArrayList<>();
-    @ManyToMany(mappedBy = "requests")  // İlişkinin ters tarafı
-    private List<Transaction> transactions;  // İlgili işlemler
-
-
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users user_id;
+    @OneToOne
+    @JoinColumn(name = "adverts_id")
+    private Adverts adverts_id;
     private String productName;
     private Integer productPrice;
     private Integer quantity;

@@ -14,14 +14,10 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
+    @ManyToOne
+    @JoinColumn(name = "request_id")
+    private Request request_id;
 
-    @ManyToMany
-    @JoinTable(
-            name = "transaction_request",  // Bağlantı tablosunun adı
-            joinColumns = @JoinColumn(name = "transaction_id"),  // Transaction tablosunun foreign key'i
-            inverseJoinColumns = @JoinColumn(name = "request_id")  // Request tablosunun foreign key'i
-    )
-    private List<Request> requests;  // Talep listesi
     private Integer amount;
     private String payment_method;
     private LocalDateTime transactions_date;

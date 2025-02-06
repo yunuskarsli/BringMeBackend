@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.Specifications.RequestSpecification;
 import com.example.demo.entity.Request;
+import com.example.demo.Filter.RequestFilter;
 import com.example.demo.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,5 +31,9 @@ public class RequestService {
     public ResponseEntity<Request> save(Request request){
     Request request1=requestRepository.save(request);
     return new ResponseEntity<>(request1,HttpStatus.CREATED);
+    }
+    public List<Request> getRequestByFilter(RequestFilter requestFilter){
+        return requestRepository.findAll(RequestSpecification.requestFilter(requestFilter));
+
     }
 }

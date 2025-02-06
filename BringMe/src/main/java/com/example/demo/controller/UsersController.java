@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.Filter.UserFilter;
 import com.example.demo.entity.Users;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
@@ -8,9 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -51,6 +52,25 @@ public class UsersController {
     @PostMapping("save")
     public ResponseEntity<Users> save(@RequestBody Users users) {
         return userService.save(users);
+    }
+    @GetMapping("filter")
+    public List<Users> filter(@RequestParam(required = false)   Integer id,
+                              @RequestParam(required = false)  String username,
+                              @RequestParam(required = false)  String surname,
+                              @RequestParam(required = false)  String email,
+                              @RequestParam(required = false)  Integer password,
+                              @RequestParam(required = false)  String role,
+                              @RequestParam(required = false)  LocalDateTime created_at){
+        UserFilter userFilter=new UserFilter();
+        userFilter.setId(id);
+        userFilter.setUsername(username);
+        userFilter.setSurname(surname);
+        userFilter.setRole(role);
+        userFilter.setEmail(email);
+        userFilter.setPassword(password);
+        userFilter.setCreated_at(created_at);
+        return userService.getByFilter(userFilter);
+
     }
 
 

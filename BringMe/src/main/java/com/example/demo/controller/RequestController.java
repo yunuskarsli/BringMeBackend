@@ -2,23 +2,21 @@ package com.example.demo.controller;
 
 //import com.example.demo.entity.Messages;
 import com.example.demo.entity.Request;
+import com.example.demo.Filter.RequestFilter;
 import com.example.demo.repository.RequestRepository;
 import com.example.demo.service.RequestService;
-import jakarta.persistence.OneToMany;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.event.MouseWheelEvent;
-import java.util.HashMap;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("request")
+@RequestMapping("/request")
 public class RequestController {
 
     @Autowired
@@ -26,8 +24,8 @@ public class RequestController {
     @Autowired
     private RequestRepository requestRepository;
 
-    @GetMapping("all")
-    public ResponseEntity<List<Request>> getAll(@RequestBody Request request){
+    @GetMapping("/all")
+    public ResponseEntity<List<Request>> getAll(){
         return requestService.getAll();
     }
     @GetMapping("page")
@@ -50,5 +48,27 @@ public class RequestController {
     @PostMapping("save")
     public ResponseEntity<Request> save(@RequestParam Request request){
       return   requestService.save(request);
+    }
+    @GetMapping("filter")
+    public List<Request> getRequestByFilter(@RequestParam(required = false)Integer id,
+                                          @RequestParam(required = false)String productName,
+                                          @RequestParam(required = false)Integer productPrice,
+                                          @RequestParam(required = false)Integer quantty,
+                                          @RequestParam(required = false)Integer deliveyfree,
+                                          @RequestParam(required = false)Integer totalCost,
+                                          @RequestParam(required = false)String status,
+                                          @RequestParam(required = false)LocalDateTime createdAt,
+                                          @RequestParam(required = false)LocalDateTime updatedAt){
+        RequestFilter filter=new RequestFilter();
+        filter.setId(id);
+        filter.setProductName(productName);
+        filter.setProductPrice(productPrice);
+        filter.setQuantity(quantty);
+        filter.setDeliveryFee(deliveyfree);
+        filter.setTotalCost(totalCost);
+        filter.setStatus(status);
+        filter.setUpdatedAt(updatedAt);
+        filter.setCreatedAt(createdAt);
+        return requestService.getRequestByFilter(filter);
     }
 }
